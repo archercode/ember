@@ -244,7 +244,7 @@ table {
   }
 }
 @font-face {
-  font-family: 'clarendon';
+  font-family: "Josefin Sans", sans-serif;/*, Futura,"Trebuchet MS",Arial,sans-serif;*/
   src: url('../fonts/clarendonltstd-webfont.eot');
   src: url('../fonts/clarendonltstd-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/clarendonltstd-webfont.woff') format('woff'), url('../fonts/clarendonltstd-webfont.ttf') format('truetype'), url('../fonts/clarendonltstd-webfont.svg#clarendon_lt_stdregular') format('svg');
   font-weight: normal;
@@ -262,11 +262,11 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Josefin Sans", sans-serif;/*, Futura,"Trebuchet MS",Arial,sans-serif;*/
   font-size: 14px;
   line-height: 1.428571429;
   color: #222222;
-  background-color: #f0eee1;
+  background-color: #fdfdfd;
 }
 input,
 button,
@@ -304,7 +304,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.428571429;
-  background-color: #f0eee1;
+  background-color: #edf7f2;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -319,7 +319,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #826258;
+  border-top: 1px solid #21C3F3;
 }
 .sr-only {
   position: absolute;
@@ -403,7 +403,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "clarendon", Georgia, "Times New Roman", Times, serif;
+  
+  font-family: "Josefin Sans", sans-serif;/*, Futura,"Trebuchet MS",Arial,sans-serif;*/
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -1390,14 +1391,14 @@ th {
 .table > thead:first-child > tr:first-child > th,
 .table > caption + thead > tr:first-child > td,
 .table > colgroup + thead > tr:first-child > td,
-.table > thead:first-child > tr:first-child > td {
+.table > thead:first-child > tr:first-child > td 
   border-top: 0;
 }
 .table > tbody + tbody {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #f0eee1;
+  background-color: #fdfdfd;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -3458,7 +3459,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #dbdbdb;
-  background-color: #f0eee1;
+  background-color: #fdfdfd;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3504,7 +3505,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #f0eee1;
+    border-bottom-color: #fdfdfd;
   }
 }
 .nav-pills > li {
@@ -3578,7 +3579,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: #f0eee1;
+    border-bottom-color: #fdfdfd;
   }
 }
 .tab-content > .tab-pane {
@@ -3927,11 +3928,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #826258;
+  background-color: #21C3F3;
   border-color: none;
 }
 .navbar-default .navbar-brand {
-  color: #f0eee1;
+  color: #fdfdfd;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -3992,12 +3993,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
   border-bottom-color: #ffffff;
 }
 .navbar-default .navbar-nav > .dropdown > a .caret {
-  border-top-color: #f0eee1;
-  border-bottom-color: #f0eee1;
+  border-top-color: #fdfdfd;
+  border-bottom-color: #fdfdfd;
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #f0eee1;
+    color: #fdfdfd;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
@@ -4018,7 +4019,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default .navbar-link {
-  color: #f0eee1;
+  color: #fdfdfd;
 }
 .navbar-default .navbar-link:hover {
   color: #ffffff;
@@ -4424,7 +4425,7 @@ a.list-group-item.active > .badge,
 .thumbnail {
   padding: 4px;
   line-height: 1.428571429;
-  background-color: #f0eee1;
+  background-color: #fdfdfd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;

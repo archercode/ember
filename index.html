@@ -5,6 +5,7 @@
   <title>The Flint &amp; Flame</title>
   <link href="css/bootstrap.css" media="screen" rel="stylesheet" />
   <link href="css/application.css" media="screen" rel="stylesheet" />
+  <link href="css/circuit.css" media="screen" rel="stylesheet" />
   <script src="jquery.js"></script>
   <script src="handlebars-1.0.0.js"></script>
   <script src="ember-1.0.0.js"></script>
@@ -12,12 +13,13 @@
   <script src="ember-data.js"></script>
   <script src="accounting.js"></script>
   <script src="app.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 <script type="text/x-handlebars" data-template-name='application'>
   <div class="navbar navbar-default">
-    <div class="container">
+    <div class="container home_links">
       {{#link-to "index" class="navbar-brand"}}<img src="images/logo.png" alt="logo" height="34" width="224">{{/link-to}}
       <ul class="nav navbar-nav navbar-right">
         {{#link-to "index" tagName="li"}}Home{{/link-to}}
@@ -55,80 +57,99 @@
 </script>
 
 
+<!-- header-->
 <script type="text/x-handlebars" data-template-name='products'>
 <div class='row'>
-  <div class='col-sm-3'>
-    <div class="list-group">
-      {{#each}}
-        {{#link-to 'product' this classNames="list-group-item"}}
-          {{title}}
-        {{/link-to}}
-      {{/each}}
-    </div>
-
-    <h3>Filter</h3>
-    <div class="list-group">
+  <div>
+      <ul class="nav nav-pills nav-justified">
+        
+        <li class="filter-item horizontal-item">
       {{#link-to 'products.sale' classNames="list-group-item"}}
         <span class="badge">{{onSale}}</span> On Sale
       {{/link-to}}
+        </li>
+        <li class="filter-item horizontal-item">
       {{#link-to 'products.seasonal' classNames="list-group-item"}}
         <span class="badge">{{seasonal}}</span> Seasonal
       {{/link-to}}
-    </div>
+        </li>
+        <li class="filter-item horizontal-item">
+        
+      {{#link-to 'products.sensor' classNames="list-group-item"}}
+        <span class="badge">{{sensor}}</span> Sensor
+      {{/link-to}}
+        </li>
+    </ul>
   </div>
-  <div class='col-sm-9'>
+</div>
+<div class="row">
+  <div>
     {{outlet}}
   </div>
 </div>
 </script>
 
-<script type="text/x-handlebars" data-template-name='products/index'>
-<ol class="breadcrumb">
-  <li class="active">Products</li>
-</ol>
+<script type="text/x-handlebars" data-template-name='products/index'> 
 <span class='lead'>If you can't find it here, it doesn't exist!</span>
 <p>We have {{productCount}} products available.</p>
 </script>
 
 
-<script type="text/x-handlebars" data-template-name='products/seasonal'>
-<ol class="breadcrumb">
-  <li>{{#link-to 'products' }}Store{{/link-to}}</li>
-  <li class="active">Seasonal</li>
-</ol>
+<script type="text/x-handlebars" data-template-name='products/seasonal'> 
 <h2>Seasonal Items</h2>
-<ul class='list-unstyled'>
+
+<div class='list-unstyled'>
   {{#each}}
-    {{product-detail product=this tagName='li' classNames='row'}}
+    <div class="col-md-4">
+    {{product-detail product=this tagName='div' classNames='product_item_grid'}}
+    </div>
   {{/each}}
-</ul>
+</div>
 </script>
 
-<script type="text/x-handlebars" data-template-name='products/sale'>
-<ol class="breadcrumb">
-  <li>{{#link-to 'products' }}Store{{/link-to}}</li>
-  <li class="active">On Sale</li>
-</ol>
+<script type="text/x-handlebars" data-template-name='products/sale'> 
 <h2>On Sale Items</h2>
-<ul class='list-unstyled'>
+<div class='list-unstyled'>
   {{#each}}
-    {{product-detail product=this tagName='li' classNames='row'}}
+    <div class="col-md-4">
+    {{product-detail product=this tagName='div' classNames='product_item_grid'}}
+    </div>
   {{/each}}
-</ul>
+</div>
+</script>
+    
+<script type="text/x-handlebars" data-template-name='products/sensor'>
+<h2>Sensor Items</h2>
+<div class='list-unstyled'>
+  {{#each}}
+    <div class="col-md-4">
+    {{product-detail product=this tagName='div' classNames='product_item_grid'}}
+    </div>
+  {{/each}}
+</div>
 </script>
 
 <script type="text/x-handlebars" data-template-name='components/product-detail'>
-<img {{bind-attr src='product.image'}} class='img-thumbnail col-sm-5'/>
-<div class='col-sm-7'>
-  <h2>{{product.title}}</h2>
-
+<div class="row"> 
+    <img {{bind-attr src='product.image'}} class='img-thumbnail'/>
+</div>
+<div class='row product_item_description'>
+  
+    <div class="col-md-8">
+        <h4>{{product.title}}</h4>
+    </div>
+    <div class="col-md-4">
+        {{#link-to 'product' product classNames='btn btn-success'}} ${{product.price}}{{/link-to}}
+    </div>
+    
+<!--
   <div class="labels">
     {{#if product.isOnSale }}<span class="label label-success">{{#link-to 'products.sale'}}On Sale{{/link-to}}</span>{{/if}}
     {{#if product.isSeasonal }}<span class="label label-warning">{{#link-to 'products.seasonal'}}Seasonal{{/link-to}}</span>{{/if}}
   </div>
-
-  <p class="product-description">{{product.description}}</p>
-  <p>{{#link-to 'product' product classNames='btn btn-success'}}Buy for ${{product.price}}{{/link-to}}</p>
+-->
+<!--  <p class="product-description">{{product.description}}</p>-->
+  
 </div>
 </script>
 
