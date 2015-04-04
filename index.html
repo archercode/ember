@@ -19,6 +19,7 @@
   <script src="app.js"></script>
     
   <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
   <script src="js/contacts.js"></script>
   <script src="js/data.js"></script>
     
@@ -36,7 +37,11 @@
         {{#link-to "index" tagName="li"}}Home{{/link-to}}
         {{#link-to "contacts" tagName="li"}}About{{/link-to}}
         {{#link-to "products" tagName="li"}}Store{{/link-to}}
-          
+        
+        <!-- TONNY 04.04.15 -->
+         {{#link-to "checkout" tagName="li"}}Cart{{/link-to}} 
+        <!--                -->  
+      
       </ul>
     </div>
   </div>
@@ -52,6 +57,34 @@
     <p class='pull-right'>{{#link-to 'credits'}}Credits{{/link-to}}</p>
   </footer>
 </script>
+
+<!-- TONNY 04.04.15 checkout SCRIPT -->    
+
+<script type="text/x-handlebars" data-template-name="checkout">
+  <div class="jumbotron">
+    <h1>Welcome to The Flint &amp; Flame!</h1>
+    <p class="tagline">Everything you need to make it through the winter.</p>
+  <!--
+    <p>{{#link-to 'products' classNames='btn btn-primary btn-lg'}}Browse All {{itemCount}} Items &raquo;{{/link-to}}</p>
+  -->
+  </div>
+
+  <div class="body-content">
+    <div class="row">
+    
+    <ul>
+    {{#each}}
+    <li>{{name}} - {{amount}}</li>
+    {{/each}}
+    </ul>
+       <button type="button" class="btn btn-primary" {{action "ok" }}>checkout</button>
+    </div>
+  </div>
+</script>
+
+
+
+<!-- the data is from cart fixture [data.js] -->    
 
 <script type="text/x-handlebars" data-template-name="index">
   <div class="jumbotron">
@@ -192,7 +225,7 @@
                           {{#if hasCloseBtn}}  
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           {{/if}}
-                        <button type="button" class="btn btn-primary" {{action 'ok'}}>{{yesButton}}</button>
+                        <button type="button" class="btn btn-primary" {{action "ok" }}>{{yesButton}}</button>
                       </div>
                     </div>
                   </div>

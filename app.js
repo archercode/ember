@@ -10,8 +10,8 @@ App.ApplicationRoute = Ember.Route.extend({
         console.log(model);
         
         var modalController = this.controllerFor(name);
-      modalController.set('model', model);
-       this.render(name, {
+        modalController.set('model', model);
+        this.render(name, {
         into: 'application',
         outlet: 'modal',
         model: model,
@@ -28,6 +28,11 @@ App.ApplicationRoute = Ember.Route.extend({
 });
 
 App.Router.map(function() {
+
+  /* TONNY 04.04.15 */
+  this.route('checkout');
+
+
   this.route('credits');
   this.resource('contacts', function() {
     this.resource('contact', { path: '/:contact_id' });
@@ -95,7 +100,7 @@ App.ModalDialogComponent = Ember.Component.extend({
 /*
  * LogoutModalController
  */
-App.LogoutModalController = Ember.Controller.extend({
+App.LogoutModalController = Ember.ObjectController.extend({
   actions: {
     logout: function() {
       alert('logout');
@@ -105,23 +110,37 @@ App.LogoutModalController = Ember.Controller.extend({
 
 
 
-App.ProductDetailModalController = Ember.Controller.extend({
+App.ProductDetailModalController = Ember.ObjectController.extend({
     getTitle: function(){
         return this.get('model').get('title')
     }.property(),
    
     actions: {
-        getTitle: function(){
-            return this.get("title");
-        },
-    logout: function() {
-      alert('prodDetail');
+      getTitle: function(){
+          return this.get("title");
+      },
+      // YesButton
+      logout: function(args) {
+      //alert('prodDetail');
+      var title = this.get('model').get('title');
+      var price = this.get('model').get('price');
+      console.log(title, price);
+  //    sendAction('action', title);
+
+
+
+      var newProduct = this.store.createRecord('cart',
+      {   
+        name: title,
+        amount: price
+      }),
+        controller = this;
+        newProduct.save();
+        console.log("hello");
     }
   }, 
     
 });
-
-
 
 // Handlebars
 Ember.Handlebars.registerBoundHelper('money', function(value) {

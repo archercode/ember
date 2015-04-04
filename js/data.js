@@ -135,3 +135,19 @@ App.Contact.FIXTURES = [
     description: 'description here'
   }
 ];
+
+
+/* TONNY 04.04.15 */
+
+App.Cart = DS.Model.extend({
+  name: DS.attr(),
+  amount: DS.attr(),
+});
+
+App.Cart.FIXTURES = [
+  {
+    id:1,
+    name: '',
+    amount: ''
+  }
+]
