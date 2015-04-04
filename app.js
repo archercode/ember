@@ -2,6 +2,31 @@ var App = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+App.ApplicationRoute = Ember.Route.extend({
+  actions: {
+    showModal: function(name, model) {
+        console.log("app route showModal!!");
+        console.log(name);
+        console.log(model);
+        
+        var modalController = this.controllerFor(name);
+      modalController.set('model', model);
+       this.render(name, {
+        into: 'application',
+        outlet: 'modal',
+        model: model,
+           controller: modalController 
+      });
+    },
+    removeModal: function() {
+      this.disconnectOutlet({
+        outlet: 'modal',
+        parentView: 'application'
+      });
+    }
+  }
+});
+
 App.Router.map(function() {
   this.route('credits');
   this.resource('contacts', function() {
@@ -46,100 +71,54 @@ App.IndexController = Ember.ArrayController.extend({
 
 
 
+/*
+ * ModalDialogComponent
+ */
 
-
-// Products
-App.ProductsRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.findAll('product');
-  }
-});
-App.ProductsIndexRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('products');
-  }
-});
-App.ProductsSeasonalRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('products').filterProperty('isSeasonal', true);
-  }
-});
-App.ProductsSaleRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('products').filterBy('isOnSale');
-  }
-});
-
-
-App.ProductsSensorRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('products').filterProperty('type', 'sensor');
-  }
-});
-
-App.ProductsMicrocontrollerRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('products').filterProperty('type', 'microcontroller');
-  }
-});
-
-
-
-
-
-
-App.ProductsController = Ember.ArrayController.extend({
-  sortProperties: ['title'],
-  count: function() {
-    return this.get('length');
-  }.property('length'),
-
-  // Slides
-  onSale: function() {
-    return this.filterBy('isOnSale').get('length');
-  }.property('@each.isOnSale'),
-
-  // Challenges
-  seasonal: function () {
-    return this.filterBy('isSeasonal').get('length');
-  }.property('@each.isSeasonal'),
-    
-  sensor: function () {
-    return this.filterBy('type','sensor').get('length');
-  }.property('@each.type'),
-});
-
-App.ProductReviewsNewController = Ember.ObjectController.extend({
-  reviewText: '',
+App.ModalDialogComponent = Ember.Component.extend({
   actions: {
-    createReview: function() {
-      var product = this.get('model'),
-          review = this.store.createRecord('review', {review: this.get('reviewText')})
-      product.get('reviews').addObject(review);
+    ok: function() {
+      this.$('.modal').modal('hide');
+      this.sendAction('ok');
+    }
+  },
+  show: function() {
+    jQuery.noConflict();
+    this.$('.modal').modal().on('hidden.bs.modal', function() {
+      this.sendAction('close');
+    }.bind(this));
+  }.on('didInsertElement')
+});
+
+
+
+/*
+ * LogoutModalController
+ */
+App.LogoutModalController = Ember.Controller.extend({
+  actions: {
+    logout: function() {
+      alert('logout');
     }
   }
 });
 
 
 
-
-
-
-// Contacts
-App.ContactsRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.findAll('contact');
-  }
-});
-App.ContactsController = Ember.ArrayController.extend({
-  sortProperties: ['name']
-});
-
-App.ContactsIndexController = Ember.Controller.extend({
-  open: function() {
-    debugger
-    return "Open Now";
-  }.property()
+App.ProductDetailModalController = Ember.Controller.extend({
+    getTitle: function(){
+        return this.get('model').get('title')
+    }.property(),
+   
+    actions: {
+        getTitle: function(){
+            return this.get("title");
+        },
+    logout: function() {
+      alert('prodDetail');
+    }
+  }, 
+    
 });
 
 
@@ -151,151 +130,3 @@ Ember.Handlebars.registerBoundHelper('money', function(value) {
 
 
 
-// Components
-// App.ProductDetailComponent = Ember.Component.extend({
-//   classNameBindings: ['isOnSale:adsfasdfa']
-// });
-
-App.ProductDetailComponent = Ember.Component.extend({
-  classNameBindings: ['isOnSale'],
-  isOnSale: function() {
-    return this.get('product.isOnSale');
-  }.property()
-});
-
-
-// Data
-App.ApplicationAdapter = DS.FixtureAdapter.extend();
-//App.ApplicationAdapter = DS.RESTAdapter.extend();
-var attr = DS.attr;
-App.Product = DS.Model.extend({
-  title: DS.attr(),
-  price: DS.attr(),
-  description: DS.attr(),
-  image: DS.attr(),
-  imageCredit: DS.attr(),
-  isOnSale: DS.attr('boolean'),
-  isSeasonal: DS.attr('boolean'),
-  type: DS.attr(),
-  reviews: DS.hasMany('review', {async: true})
-});
-
-App.Product.FIXTURES = [
-  {
-    id: 1,
-    title: 'Flint',
-    price: 99,
-    description: 'Flint is a hard, sedimentary cryptocrystalline form of the mineral quartz, categorized as a variety of chert.',
-    isOnSale: true,
-    isSeasonal: true,
-    type: 'sensor',
-    ratings: [100, 101],
-    image: 'images/products/flint.png',
-    imageCredit: ''
-  },
-  {
-    id: 2,
-    title: 'Kindling',
-    price: 249,
-    description: 'Easily combustible small sticks or twigs used for starting a fire.',
-    isOnSale: false,
-    isSeasonal: true,
-    type: 'sensor',
-    ratings: [102, 103],
-    image: 'images/products/kindling.png',
-    imageCredit: ''
-  },
-  {
-    id: 3,
-    title: 'Matches',
-    price: 499,
-    description: 'One end is coated with a material that can be ignited by frictional heat generated by striking the match against a suitable surface.',
-    isOnSale: false,
-    isSeasonal: true,
-    type: 'sensor',
-    ratings: [104],
-    image: 'images/products/matches.png',
-    imageCredit: ''
-  },
-  {
-    id: 4,
-    title: 'Bow Drill',
-    price: 999,
-    description: 'The bow drill is an ancient tool. While it was usually used to make fire, it was also used for primitive woodworking and dentistry.',
-    isOnSale: true,
-    isSeasonal: false,
-    type: 'microcontroller',
-    ratings: [],
-    image: 'images/products/bow-drill.png',
-    imageCredit: ''
-  },
-  {
-    id: 5,
-    title: 'Tinder',
-    price: 499,
-    description: 'Tinder is easily combustible material used to ignite fires by rudimentary methods.',
-    isOnSale: true,
-    isSeasonal: false,
-    type: 'microcontroller',
-    ratings: [],
-    image: 'images/products/tinder.png',
-    imageCredit: ''
-  },
-  {
-    id: 6,
-    title: 'Birch Bark Shaving',
-    price: 999,
-    description: 'Fresh and easily combustable',
-    isOnSale: true,
-    isSeasonal: false,
-    type: 'microcontroller',
-    ratings: [],
-    image: 'images/products/birch.png',
-    imageCredit: ''
-  }
-]
-
-App.Review = DS.Model.extend({
-  review: DS.attr('string'),
-  reviewedAt: DS.attr('date'),
-  product: DS.belongsTo('product')
-});
-
-App.Review.FIXTURES = [
-  { id: 100, product: 1, review: "Very good!" },
-  { id: 101, product: 1, review: "Amazing!" },
-  { id: 102, product: 2, review: "Also Amazing!" },
-  { id: 103, product: 2, review: "Worth checking out." },
-  { id: 104, product: 3, review: "Not worth it." },
-]
-
-App.Contact = DS.Model.extend({
-  name: DS.attr(),
-  avatar: DS.attr(),
-  joined: DS.attr('number'),
-  description: DS.attr()
-});
-
-App.Contact.FIXTURES = [
-  {
-    id: 200,
-    name: 'Flame Spirit 1',
-    joined: 2010,
-    avatar: 'images/contacts/patty.png',
-    description: 'Description here'
-  },
-  {
-    id: 201,
-    name: 'Flame Spirit 2',
-    joined: 2010,
-    avatar: 'images/contacts/adam.png',
-    description: 'description here'
-  },
-  {
-    id: 202,
-    name: 'Flame Spirit 3',
-    joined: 2012,
-    avatar: 'images/contacts/martin.png',
-    description: 'description here'
-  }
-];
